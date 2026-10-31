@@ -678,7 +678,7 @@ function renderControl(ov){
     ? '<div class="warnbox">🚨 وضع الطوارئ مفعّل — كل الدخول مقفول للاستراتيجيتين. الصفقات المفتوحة أُغلقت أو تُدار حتى إغلاقها.</div>'
     : (!ov.key_enabled ? '<div class="warnbox">🔴 هذه الاستراتيجية متوقفة — لن تُفتح صفقات جديدة. الصفقات المفتوحة تُدار بقواعدها حتى إغلاقها. اضغط «تفعيل الاستراتيجية» للعودة.</div>' : '');
   $('cDb').innerHTML =
-    kv('ملف القاعدة', mono(esc(ov.db_name||'sniper_v8.db'))) +
+    kv('ملف القاعدة', mono(esc(ov.db_name||'dual_v11.db'))) +
     kv('صفقات مسجلة ('+esc(ov.table_trades)+')', mono(ov.db_rows.trades)) +
     kv('منها مفتوحة محفوظة', mono(ov.db_rows.open)) +
     kv('أيام مسجلة ('+esc(ov.table_daily)+')', mono(ov.db_rows.days)) +
