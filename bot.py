@@ -2333,5 +2333,5 @@ class DualStrategyBot:
 
 
 if __name__ == "__main__":
-    bot = DualStrategyBot()
+    bot = bot.py()
     bot.start()
