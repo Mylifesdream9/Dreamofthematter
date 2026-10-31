@@ -2,8 +2,8 @@
 ═══════════════════════════════════════════════════════════════════════
   🤖 البوت ثنائي الاستراتيجية — محرك واحد + استراتيجيتان في ملف واحد
 ═══════════════════════════════════════════════════════════════════════
-  هذا هو المحرك الأساسي الكامل (ملف واحد من الصفر) — بلا استراتيجية
-  القناص إطلاقاً. يحتوي استراتيجيتين مستقلتين تماماً:
+  هذا هو المحرك الأساسي الكامل (ملف واحد من الصفر). يحتوي
+  استراتيجيتين مستقلتين تماماً:
 
   1) 🚀 راكب الترند (TREND) — كما هو في الملف الأصلي بلا أي تغيير:
        اختراق أعلى/أدنى 48 شمعة ساعة + اتجاه 4 ساعات EMA20/50
@@ -59,7 +59,7 @@ class DatabaseManager:
     """قاعدة مشتركة: الصفقات الحية + أرباح الأيام + سجل الإشارات + الإعدادات.
     كل استراتيجية إضافةً لذلك لها قاعدة صفقات مستقلة خاصة بها (trend_*/mars_*)."""
 
-    def __init__(self, db_name='sniper_v8.db'):
+    def __init__(self, db_name='dual_v11.db'):
         self.db_name = db_name
 
     async def init_db(self):
@@ -482,7 +482,7 @@ CREATE INDEX IF NOT EXISTS idx_trend_entry ON trend_trades(entry_ts);
 
 
 class TrendDB:
-    def __init__(self, db_name="sniper_v8.db"):
+    def __init__(self, db_name="dual_v11.db"):
         self.db_name = db_name
 
     async def init(self):
@@ -828,7 +828,7 @@ CREATE INDEX IF NOT EXISTS idx_mars_entry ON mars_trades(entry_ts);
 class MarsDB:
     """قاعدة صفقات «موجات 7/25/99» — نفس واجهة TrendDB تماماً."""
 
-    def __init__(self, db_name="sniper_v8.db"):
+    def __init__(self, db_name="dual_v11.db"):
         self.db_name = db_name
 
     async def init(self):
@@ -919,8 +919,8 @@ class MarsDB:
 
 
 # ══════════════════════════════════════════════════════════════════════
-#  ⚙️ المحرك الأساسي — بنية مجرّبة من القناص V8.2 بلا منطق القناص
-#     (تنفيذ، وقف على المنصة، مصالحة ذاتية، شفاء ذاتي) + توجيه استراتيجيتين
+#  ⚙️ المحرك الأساسي — (تنفيذ، وقف على المنصة، مصالحة ذاتية، شفاء ذاتي)
+#     + توجيه استراتيجيتين
 # ══════════════════════════════════════════════════════════════════════
 class DualStrategyBot:
     STRATEGY_LABELS = {'TREND': '🚀 راكب الترند', 'MARS': '📐 موجات 7/25/99',
@@ -975,7 +975,7 @@ class DualStrategyBot:
                           else "https://fapi.binance.com")
         self.time_offset_ms = 0
 
-        db_file = os.environ.get('DB_FILE', 'sniper_v8.db')
+        db_file = os.environ.get('DB_FILE', 'dual_v11.db')
         self.db = DatabaseManager(db_file)
         self.trend = TrendStrategy(None, logger.warning)
         self.trend_exit = TrendExitManager(None, logger.warning)
@@ -2333,5 +2333,5 @@ class DualStrategyBot:
 
 
 if __name__ == "__main__":
-    bot = bot.py()
+    bot = DualStrategyBot()
     bot.start()
